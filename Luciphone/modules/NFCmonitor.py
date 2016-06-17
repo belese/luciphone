@@ -23,6 +23,8 @@ class NFCmonitor :
    def _trust_uid(self,uid) :
        return uid == self.pn532.get_uid() and uid == self.pn532.get_uid()
    
+   def stop(self) :
+       self.stopped = True
    def start(self) :       
        print ("NFC Monitor started")
        while not self.stopped :           
@@ -37,11 +39,12 @@ class NFCmonitor :
                 if self.cbcardin : self.cbcardin(self.UUID)
                 
            elif not uid and self.cardIn and self._trust_uid(uid):                              
-                  print ("Card Removed")
+                  print ("Card Removed 2",self.UUID)
+                  uuid = self.UUID
                   self.UUID = None
                   self.cardIn = False                  
-                  if self.cbcardout : self.cbcardout(self.UUID)
+                  if self.cbcardout : self.cbcardout(uuid)
            
                      
-a = NFCmonitor()
-a.start()
+NFC = NFCmonitor()
+NFC.start()
